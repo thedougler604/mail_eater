@@ -1,17 +1,21 @@
 to setup postfix to send all your mail to the mail eater, 
 
-1) Add the following to the very end of /etc/postfix/main.cf
+1) Post Fix Stuff
 
-	default_transport = file_route
+	a) Add the following to the very end of /etc/postfix/main.cf
 
-2) Add the following to the very end of /etc/postfix/master.cf
+		default_transport = file_route
 
-	file_route unix  -       n       n       -       -       pipe user=$user argv=$path
+	b) Add the following to the very end of /etc/postfix/master.cf
 
-	Where $user is the value of whoami on the command line and $path is the path to the mail_eater.php function.
-	For me
-	$user = dougmclean
-	$path = /Users/dougmclean/Dropbox/www/mail_eater/mail_eater.php
+		file_route unix  -       n       n       -       -       pipe user=$user argv=$path
+
+		Where $user is the value of whoami on the command line and $path is the path to the mail_eater.php function.
+		For me
+		$user = dougmclean
+		$path = /Users/dougmclean/Dropbox/www/mail_eater/mail_eater.php
+
+	c) run the command $sudo postfix reload
 
 3) PHP needs to have mailparse enabled
 
@@ -20,7 +24,8 @@ to setup postfix to send all your mail to the mail eater,
 		check to see if you have mac ports by running the port command - is it there? 
 	c) sudo port install autoconf
 	d) Download php5.4.4 to /Applications/MAMP/bin/php/php5.4.4/include/php 
-	e) /Applications/MAMP/bin/php/php5.4.4/include/php/configure --enable-mbstring
+	e) cd /Applications/MAMP/bin/php/php5.4.4/include/php/
+	e) ./configure --enable-mbstring
 	f) sudo /Applications/MAMP/bin/php/php5.4.4/bin/pecl install mailparse
 	g) add "extension=mailparse.so" after the line: extension=pdo_mysql.so (my line 540)
 
